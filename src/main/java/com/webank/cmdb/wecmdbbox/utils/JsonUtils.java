@@ -69,7 +69,7 @@ public class JsonUtils {
         return mapper.convertValue(mapContent, clzz);
     }
 
-    public static <T> T fromString(String json, Class<T> clzz) throws JsonProcessingException {
+    public static <T> T fromString(String json, Class<T> clzz) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json,clzz);
     }

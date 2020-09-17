@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
+import java.io.IOException;
 import java.util.List;
 
 @ShellComponent
@@ -29,7 +30,7 @@ public class WecmdbCommand {
     }
 
     @ShellMethod(value = "Execute adhoc integrate qeury", key={"exec_adhoc_int"})
-    public void execAdhocQuery(String adhocQueryBody) throws JsonProcessingException {
+    public void execAdhocQuery(String adhocQueryBody) throws IOException {
         IntegrationQueryDto integrationQueryDto = JsonUtils.fromString(adhocQueryBody, IntegrationQueryDto.class);
         QueryResponse response = cmdbApiV2Service.queryAdhocInt(new AdhocIntegrationQueryDto(integrationQueryDto,QueryRequest.defaultQueryObject()));
         printPrettyJson(response.getContents());
