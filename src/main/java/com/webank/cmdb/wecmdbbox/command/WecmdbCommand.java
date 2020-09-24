@@ -3,6 +3,7 @@ package com.webank.cmdb.wecmdbbox.command;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.webank.cmdb.wecmdbbox.dto.cmdb.*;
 import com.webank.cmdb.wecmdbbox.remote.CmdbApiV2Service;
+import com.webank.cmdb.wecmdbbox.service.AutoFillService;
 import com.webank.cmdb.wecmdbbox.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -15,6 +16,8 @@ import java.util.List;
 public class WecmdbCommand {
     @Autowired
     private CmdbApiV2Service cmdbApiV2Service;
+    @Autowired
+    private AutoFillService autoFillService;
 
     @ShellMethod(value = "Fetch ci types",key = {"fetch_ci_types"})
     public void fetchCiTypes(){
@@ -46,6 +49,12 @@ public class WecmdbCommand {
     public void fetchIntQuery(String name){
         IntegrationQueryDto integrationQueryDto = cmdbApiV2Service.getIntQueryByName(name);
         printPrettyJson(integrationQueryDto);
+    }
+
+    @ShellMethod(value="Fetch value by rule", key="fetch_rule_value")
+    public void fetchRuleValue(String guid,String rule){
+        String result = autoFillService.queryValueByRule(guid,rule,new StringBuilder());
+        System.out.println(result);
     }
 
     private void printPrettyJson(Object obj){

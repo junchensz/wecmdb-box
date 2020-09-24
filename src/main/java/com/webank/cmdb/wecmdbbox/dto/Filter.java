@@ -1,4 +1,4 @@
-package com.webank.cmdb.wecmdbbox.dto.cmdb;
+package com.webank.cmdb.wecmdbbox.dto;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
@@ -18,7 +18,7 @@ public class Filter {
     public Filter() {
     }
 
-    public Filter(String name, String operator, Object value,String... type) {
+    public Filter(String name, String operator, Object value, String... type) {
         this.name = name;
         this.operator = operator;
         this.value = value;

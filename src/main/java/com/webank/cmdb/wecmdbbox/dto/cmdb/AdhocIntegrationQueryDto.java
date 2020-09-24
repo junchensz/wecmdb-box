@@ -2,6 +2,7 @@ package com.webank.cmdb.wecmdbbox.dto.cmdb;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Query will not be persisted
@@ -11,6 +12,7 @@ import lombok.Data;
  */
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class AdhocIntegrationQueryDto {
     private IntegrationQueryDto criteria;
