@@ -1,6 +1,7 @@
 package com.webank.cmdb.wecmdbbox.command;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.common.base.Strings;
 import com.webank.cmdb.wecmdbbox.dto.cmdb.*;
 import com.webank.cmdb.wecmdbbox.remote.CmdbApiV2Service;
 import com.webank.cmdb.wecmdbbox.service.AutoFillService;
@@ -52,9 +53,25 @@ public class WecmdbCommand {
     }
 
     @ShellMethod(value="Fetch value by rule", key="fetch_rule_value")
-    public void fetchRuleValue(String guid,String rule){
+    public void fetchRuleValue(int ciTypeId, String keyName,String rule){
+        String guid = fetchGuid(ciTypeId,keyName);
+        if(Strings.isNullOrEmpty(guid)){
+            System.out.println(String.format("Failed to fetch guid for ciTypeId:%d keyName:%s",ciTypeId,keyName));
+            return;
+        }
         String result = autoFillService.queryValueByRule(guid,rule,new StringBuilder());
         System.out.println(result);
+    }
+
+    private String fetchGuid(int ciTypeId,String keyName){
+        QueryRequest request = QueryRequest.defaultQueryObject().addEqualsFilter("key_name",keyName);
+        QueryResponse<CiData> response = cmdbApiV2Service.retrieveCis(ciTypeId,request);
+        if(request == null || response.getContents().size()==0){
+            return "";
+        }
+        CiData ciData = response.getContents().get(0);
+        String guid = (String) ciData.getData().get("guid");
+        return guid;
     }
 
     private void printPrettyJson(Object obj){

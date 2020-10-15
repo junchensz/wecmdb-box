@@ -6,7 +6,6 @@ import com.webank.cmdb.wecmdbbox.remote.WecubeApiService;
 import com.webank.cmdb.wecmdbbox.service.StorageService;
 import com.webank.cmdb.wecmdbbox.support.RestTemplateInterceptor;
 import com.webank.cmdb.wecmdbbox.utils.StringUtilsEx;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
